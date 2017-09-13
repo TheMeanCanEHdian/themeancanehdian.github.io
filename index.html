@@ -1,0 +1,69 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+
+<p>FTA Member</p>
+<select class="user_select">
+  <option value="[NO NAME SELECTED]">Select your name</option>
+  <option value="andreasandersen">Andreas Andersen</option>
+  <option value="claudianguyen">Claudia Nguyen</option>
+  <option value="jayyu">Jay Yu</option>
+  <option value="jorgettegrosso">Jorgette Grosso</option>
+  <option value="kyleseibt">Kyle Seibt</option>
+  <option value="marcorengo">Marc Orengo</option>
+  <option value="otisioannou">Otis Ioannou</option>
+  <option value="patrickhamid">Patrick Hamid</option>
+  <option value="ryanbrown">Ryan Brown</option>
+</select></br>
+<p>Customer Name</p>
+<input id="name" />
+<p>Customer Email</p>
+<input id="email" />
+<p>Case Number</p>
+<input id="case" />
+<p>Account Name</p>
+<input id="account" />
+<p>Product(s)</p>
+<input id="products" />
+
+<p>Output</p>
+https://calendly.com/<span id="user_display"></span>/fta?</span><span id="name_display"></span><span id="email_display"></span><span id="case_display"></span><span id="account_display"></span><span id="products_display"></span>
+
+
+<script>
+$(document).ready(function() {
+    $(".user_select").change(function() {
+        $('#user_display').html($(this).val());
+    }).change();
+
+    $("#name").on("change keypress input", function() {
+        $("#name_display").text( 'name=' + $(this).val().replace(/\s+/g, '+') );
+    });
+
+    $("#email").on("change keypress input", function() {
+        $("#email_display").text( '&email=' + $(this).val().replace(/\s+/g, '+') );
+    });
+
+    $("#case").on("change keypress input", function() {
+        $("#case_display").text( '&a1=' + $(this).val().replace(/\s+/g, '+') );
+    });
+
+    $("#account").on("change keypress input", function() {
+        $("#account_display").text( '&a2=' + $(this).val().replace(/\s+/g, '+') );
+    });
+
+    $("#products").on("change keypress input", function() {
+        $("#products_display").text( '&a3=' + $(this).val().replace(/\s+/g, '+') );
+    });
+
+    $(function () {
+    $('.user_select').change(function() {
+        console.log('change');
+        if( Cookies ) {
+            Cookies.set('user', $(this).val());
+        }
+    });
+    var user_cookie = Cookies && Cookies.get('user') || '[NO NAME SELECTED]';
+    $('.user_select').val(user_cookie).trigger('change');
+    });
+});
+</script>
