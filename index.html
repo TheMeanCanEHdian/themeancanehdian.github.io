@@ -28,8 +28,8 @@
 <input id="products" />
 
 <p>Output</p>
-https://calendly.com/<span id="user_display"></span>/fta?</span><span id="name_display"></span><span id="email_display"></span><span id="case_display"></span><span id="account_display"></span><span id="products_display"></span>
-
+<div id="URL">https://calendly.com/<span id="user_display"></span>/fta?</span><span id="name_display"></span><span id="email_display"></span><span id="case_display"></span><span id="account_display"></span><span id="products_display"></span></div>
+<button onclick="copyToClipboard('#URL')">Copy URL to clipboard</button>
 
 <script>
 $(document).ready(function() {
@@ -67,6 +67,14 @@ $(document).ready(function() {
     var user_cookie = Cookies && Cookies.get('user') || '[NO NAME SELECTED]';
     $('.user_select').val(user_cookie).trigger('change');
     });
+  
+  function copyToClipboard(element) {
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
 });
 </script>
 </body>
