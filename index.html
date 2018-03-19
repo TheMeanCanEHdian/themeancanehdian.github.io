@@ -35,7 +35,7 @@
 <script>
 $(document).ready(function() {
     $(".user_select").change(function() {
-        $('#user_display').html($(this).val());
+        $('#user_display').html('meraki-' + $(this).val());
     }).change();
     $("#name").on("change keypress input", function() {
         $("#name_display").text( 'name=' + $(this).val().replace(/\s+/g, '+') );
