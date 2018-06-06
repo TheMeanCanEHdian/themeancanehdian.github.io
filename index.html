@@ -7,7 +7,6 @@
 <select class="user_select">
   <option value="[NO NAME SELECTED]">Select your name</option>
   <option value="meraki-andreasandersen">Andreas Andersen</option>
-  <option value="meraki-claudianguyen">Claudia Nguyen</option>
   <option value="meraki-davidluong">David Luong</option>
   <option value="meraki-jayyu">Jay Yu</option>
   <option value="meraki-johnla">John La</option>
@@ -17,6 +16,11 @@
   <option value="meraki-otisioannou">Otis Ioannou</option>
   <option value="meraki-fta">APJC</option>
 </select></br>
+<p>Call Type</p>
+<select class="call_select">
+  <option value="/fta?">FTA Call</option>
+  <option value="/sm-onboarding?">SM Onboarding Call</option>
+</select></br>
 <p>Customer Name</p>
 <input id="name" />
 <p>Customer Email</p>
@@ -25,11 +29,13 @@
 <input id="case" />
 <p>Account Name</p>
 <input id="account" />
-<p>Product(s)</p>
+<div id="q4">
+<p>Products on trial</p>
 <input id="products" />
+</div>
 
 <p>Output</p>
-<div id="URL">https://calendly.com/<span id="user_display"></span>/fta?</span><span id="name_display"></span><span id="email_display"></span><span id="case_display"></span><span id="account_display"></span><span id="products_display"></span></div>
+<div id="URL">https://calendly.com/<span id="user_display"></span><span id="call_display"></span><span id="name_display"></span><span id="email_display"></span><span id="case_display"></span><span id="account_display"></span><span id="products_display"></span></div>
 <br>
 <button onclick="copyToClipboard('#URL')">Copy URL</button>
 
@@ -37,6 +43,15 @@
 $(document).ready(function() {
     $(".user_select").change(function() {
         $('#user_display').html($(this).val());
+    }).change();
+    $(".call_select").change(function() {
+        $('#call_display').html($(this).val());
+        var opt = $(this).val();
+        if (opt == "/fta?"){
+          $('#q4').show();
+        } else {
+          $('#q4').hide();
+        }
     }).change();
     $("#name").on("change keypress input", function() {
         $("#name_display").text( 'name=' + $(this).val().replace(/\s+/g, '+') );
