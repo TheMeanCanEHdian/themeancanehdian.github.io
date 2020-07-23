@@ -163,14 +163,14 @@
       });
       // Store selected FTA Member in cookies
       $(function () {
-      $('.userSelect').change(function() {
+      $('#ftaMember').change(function() {
           console.log('change');
           if( Cookies ) {
               Cookies.set('user', $(this).val());
           }
       });
       var user_cookie = Cookies && Cookies.get('user') || '[NO NAME SELECTED]';
-      $('.userSelect').val(user_cookie).trigger('change');
+      $('#ftaMember').val(user_cookie).trigger('change');
       });
     </script>
     <script>
