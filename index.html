@@ -91,6 +91,21 @@
               // Change callSelect text to Team Availability
               $("#callSelect").find(":selected").text("Team Availability");
 
+            } else if ($(this).val() == "meraki-apjc") {
+              // Store the type of call before PTO was selected
+              lastSelectedCallValue = $("#callSelect option:selected").val();
+              lastSelectedCallText = $("#callSelect").find(":selected").text();
+              // Disable the callSelect
+              $("#callSelect").attr("disabled", true);
+              // Change call display to /team-availability
+              $('#callDisplay').html('/fta?');
+              // If selectedCall was Onboarding show the products field again
+              if(lastSelectedCallValue == "/sm-onboarding?"){
+                $('.question4').show();
+              }
+              // Change callSelect text to Team Availability
+              $("#callSelect").find(":selected").text("FTA Call");
+
             } else {
               // Enable the call select
               $("#callSelect").attr("disabled", false);
