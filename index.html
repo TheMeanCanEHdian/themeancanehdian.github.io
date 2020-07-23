@@ -12,33 +12,37 @@
   </head>
   <body>
     <div class="container">
-      <div class="form-group">
-        <label for="ftaMember">Select FTA Member/Group</label>
-        <select class="form-control" id="ftaMember">
-          <option value="[NO NAME SELECTED]">Select your name</option>
-          <option value="meraki-baptistefuseau">Baptiste Fuseau</option>
-          <option value="meraki-davidluong">David Luong</option>
-          <option value="meraki-jonathansmith">Jonathan Smith</option>
-          <option value="meraki-joshcruz">Josh Cruz</option>
-          <option value="meraki-kyleseibt">Kyle Seibt</option>
-          <option value="meraki-liamrichardson">Liam Richardson</option>
-          <option value="meraki-marcorengo">Marc Orengo</option>
-          <option value="meraki-rickgrijalva">Rick Grijalva</option>
-          <option value="meraki-robertwalton">Robert Walton</option>
-          <option value="meraki-apjc">APJC</option>
-        </select>
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="ftaMember">Select FTA Member/Group</label>
+          <select class="form-control" id="ftaMember">
+            <option value="[NO NAME SELECTED]">Select your name</option>
+            <option value="meraki-baptistefuseau">Baptiste Fuseau</option>
+            <option value="meraki-davidluong">David Luong</option>
+            <option value="meraki-jonathansmith">Jonathan Smith</option>
+            <option value="meraki-joshcruz">Josh Cruz</option>
+            <option value="meraki-kyleseibt">Kyle Seibt</option>
+            <option value="meraki-liamrichardson">Liam Richardson</option>
+            <option value="meraki-marcorengo">Marc Orengo</option>
+            <option value="meraki-rickgrijalva">Rick Grijalva</option>
+            <option value="meraki-robertwalton">Robert Walton</option>
+            <option value="meraki-apjc">APJC</option>
+            <option value="meraki-fta-cover">PTO</option>
+          </select>
+        </div>
+        <!-- <div class="form-group">
+          <input type="radio" class="form-check-input" id="apjcGroup">
+          <label class="form-check-label" for="apjcGroup">AJPC Group</label>
+        </div> -->
+        <div class="form-group col-6">
+          <label for="callSelect">Select Call Type</label>
+          <select class="form-control" id="callSelect">
+            <option value="/fta?" id="callSelect1">FTA Call</option>
+            <option value="/sm-onboarding?">SM Onboarding Call</option>
+          </select>
+        </div>
       </div>
-      <!-- <div class="form-group">
-        <input type="radio" class="form-check-input" id="apjcGroup">
-        <label class="form-check-label" for="apjcGroup">AJPC Group</label>
-      </div> -->
-      <div class="form-group">
-        <label for="callSelect">Select Call Type</label>
-        <select class="form-control" id="callSelect">
-          <option value="/fta?">FTA Call</option>
-          <option value="/sm-onboarding?">SM Onboarding Call</option>
-        </select>
-      </div>
+
       <div class="form-group">
         <label for="customerName">Customer Name</label>
         <input type="text" class="form-control" id="customerName">
@@ -67,10 +71,39 @@
     </div>
 
     <script>
+      var lastSelectedCallValue;
+      var lastSelectedCallText;
       $(document).ready(function() {
         // Change selected FTA member in URL
         $("#ftaMember").change(function() {
             $('#ftaMemberDisplay').html($(this).val());
+            if($(this).val() == "meraki-fta-cover"){
+              // Store the type of call before PTO was selected
+              lastSelectedCallValue = $("#callSelect option:selected").val();
+              lastSelectedCallText = $("#callSelect").find(":selected").text();
+              // Disable the callSelect
+              $("#callSelect").attr("disabled", true);
+              // Change call display to /team-availability
+              $('#callDisplay').html('/team-availability?');
+              // If selectedCall was Onboarding show the products field again
+              if(lastSelectedCallValue == "/sm-onboarding?"){
+                $('.question4').show();
+              }
+              // Change callSelect text to Team Availability
+              $("#callSelect").find(":selected").text("Team Availability");
+
+            } else {
+              // Enable the call select
+              $("#callSelect").attr("disabled", false);
+              // Return the callDisplay to what it was before PTO was selected
+              $("#callDisplay").html(lastSelectedCallValue);
+              // Return the text for the selectCall option back to before PTO was selected
+              $("#callSelect").find(":selected").text(lastSelectedCallText);
+              // If selectedCall was Onboarding hide the products field again
+              if(lastSelectedCallValue == "/sm-onboarding?"){
+                $('.question4').hide();
+              }
+            }
         }).change();
         // Change selected call type in URL
         $("#callSelect").change(function() {
