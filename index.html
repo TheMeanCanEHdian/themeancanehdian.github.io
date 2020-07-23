@@ -12,6 +12,9 @@
   </head>
   <body>
     <div class="container">
+      <div class="row pt-3">
+        <h2 class="col-12">FTA Calendly URL Builder</h3>
+      </div>
       <div class="row">
         <div class="form-group col-6">
           <label for="ftaMember">Select FTA Member/Group</label>
@@ -30,10 +33,6 @@
             <option value="meraki-fta-cover">PTO</option>
           </select>
         </div>
-        <!-- <div class="form-group">
-          <input type="radio" class="form-check-input" id="apjcGroup">
-          <label class="form-check-label" for="apjcGroup">AJPC Group</label>
-        </div> -->
         <div class="form-group col-6">
           <label for="callSelect">Select Call Type</label>
           <select class="form-control" id="callSelect">
@@ -64,7 +63,7 @@
         <input type="text" class="form-control" id="trialProducts">
       </div>
 
-      <p>Output</p>
+      <div class="pb-1">Output</div>
       <div id="newURL">https://calendly.com/<span id="ftaMemberDisplay"></span><span id="callDisplay"></span><span id="customerNameDisplay"></span><span id="customerEmailDisplay"></span><span id="customerNumberDisplay"></span><span id="customerAccountNameDisplay"></span><span id="trialProductsDisplay"></span></div>
       <br>
       <button class="btn btn-success" onclick="copyToClipboard('#newURL')">Copy URL</button>
