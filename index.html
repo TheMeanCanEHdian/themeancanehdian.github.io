@@ -1,94 +1,154 @@
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
-<body>
-<p>FTA Member</p>
-<select class="user_select">
-  <option value="[NO NAME SELECTED]">Select your name</option>
-  <option value="meraki-davidluong">David Luong</option>
-  <option value="meraki-diegomota">Diego Mota</option>
-  <option value="meraki-jonathansmith">Jonathan Smith</option>
-  <option value="meraki-joshcruz">Josh Cruz</option>
-  <option value="meraki-kevinhom">Kevin Hom</option>
-  <option value="meraki-kyleseibt">Kyle Seibt</option>
-  <option value="meraki-liamrichardson">Liam Richardson</option>
-  <option value="meraki-marcorengo">Marc Orengo</option>
-  <option value="meraki-robertwalton">Robert Walton</option>
-  <option value="meraki-apjc">APJC</option>
-</select></br>
-<p>Call Type</p>
-<select class="call_select">
-  <option value="/fta?">FTA Call</option>
-  <option value="/sm-onboarding?">SM Onboarding Call</option>
-</select></br>
-<p>Customer Name</p>
-<input id="name" />
-<p>Customer Email</p>
-<input id="email" />
-<p>Case Number</p>
-<input id="case" />
-<p>Account Name</p>
-<input id="account" />
-<div id="q4">
-<p>Products On Trial</p>
-<input id="products" />
-</div>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-group">
+        <label for="ftaMember">Select FTA Member/Group</label>
+        <select class="form-control" id="ftaMember">
+          <option value="[NO NAME SELECTED]">Select your name</option>
+          <option value="meraki-baptistefuseau">Baptiste Fuseau</option>
+          <option value="meraki-davidluong">David Luong</option>
+          <option value="meraki-jonathansmith">Jonathan Smith</option>
+          <option value="meraki-joshcruz">Josh Cruz</option>
+          <option value="meraki-kyleseibt">Kyle Seibt</option>
+          <option value="meraki-liamrichardson">Liam Richardson</option>
+          <option value="meraki-marcorengo">Marc Orengo</option>
+          <option value="meraki-rickgrijalva">Rick Grijalva</option>
+          <option value="meraki-robertwalton">Robert Walton</option>
+          <option value="meraki-apjc">APJC</option>
+        </select>
+      </div>
+      <!-- <div class="form-group">
+        <input type="radio" class="form-check-input" id="apjcGroup">
+        <label class="form-check-label" for="apjcGroup">AJPC Group</label>
+      </div> -->
+      <div class="form-group">
+        <label for="callSelect">Select Call Type</label>
+        <select class="form-control" id="callSelect">
+          <option value="/fta?">FTA Call</option>
+          <option value="/sm-onboarding?">SM Onboarding Call</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="customerName">Customer Name</label>
+        <input type="text" class="form-control" id="customerName">
+      </div>
+      <div class="form-group">
+        <label for="customerEmail">Customer Email</label>
+        <input type="text" class="form-control" id="customerEmail">
+      </div>
+      <div class="form-group">
+        <label for="customerNumber">Customer Number</label>
+        <input type="text" class="form-control" id="customerNumber">
+      </div>
+      <div class="form-group">
+        <label for="customerAccountName">Account Name</label>
+        <input type="text" class="form-control" id="customerAccountName">
+      </div>
+      <div class="form-group question4">
+        <label for="trialProducts">Products On Trial</label>
+        <input type="text" class="form-control" id="trialProducts">
+      </div>
 
-<p>Output</p>
-<div id="URL">https://calendly.com/<span id="user_display"></span><span id="call_display"></span><span id="name_display"></span><span id="email_display"></span><span id="case_display"></span><span id="account_display"></span><span id="products_display"></span></div>
-<br>
-<button onclick="copyToClipboard('#URL')">Copy URL</button>
+      <p>Output</p>
+      <div id="newURL">https://calendly.com/<span id="ftaMemberDisplay"></span><span id="callDisplay"></span><span id="customerNameDisplay"></span><span id="customerEmailDisplay"></span><span id="customerNumberDisplay"></span><span id="customerAccountNameDisplay"></span><span id="trialProductsDisplay"></span></div>
+      <br>
+      <button onclick="copyToClipboard('#newURL')">Copy URL</button>
+    </div>
 
-<script>
-$(document).ready(function() {
-    $(".user_select").change(function() {
-        $('#user_display').html($(this).val());
-    }).change();
-    $(".call_select").change(function() {
-        $('#call_display').html($(this).val());
-        var opt = $(this).val();
-        if (opt == "/fta?"){
-          $('#q4').show();
-        } else {
-          $('#q4').hide();
-        }
-    }).change();
-    $("#name").on("change keypress input", function() {
-        $("#name_display").text( 'name=' + $(this).val().replace(/\s+/g, '+') );
-    });
-    $("#email").on("change keypress input", function() {
-        $("#email_display").text( '&email=' + $(this).val().replace(/\s+/g, '+') );
-    });
-    $("#case").on("change keypress input", function() {
-        $("#case_display").text( '&a1=' + $(this).val().replace(/\s+/g, '+') );
-    });
-    $("#account").on("change keypress input", function() {
-        $("#account_display").text( '&a2=' + $(this).val().replace(/\s+/g, '+') );
-    });
-    $("#products").on("change keypress input", function() {
-        $("#products_display").text( '&a3=' + $(this).val().replace(/\s+/g, '+') );
-    });
-    $(function () {
-    $('.user_select').change(function() {
-        console.log('change');
-        if( Cookies ) {
-            Cookies.set('user', $(this).val());
-        }
-    });
-    var user_cookie = Cookies && Cookies.get('user') || '[NO NAME SELECTED]';
-    $('.user_select').val(user_cookie).trigger('change');
-    });
-});
-</script>
-<script>
-function copyToClipboard(element) {
-  var $temp = $("<input>");
-  $("body").append($temp);
-  $temp.val($(element).text()).select();
-  document.execCommand("copy");
-  $temp.remove();
-}
-</script>
-</body>
+    <script>
+      $(document).ready(function() {
+        // Change selected FTA member in URL
+        $("#ftaMember").change(function() {
+            $('#ftaMemberDisplay').html($(this).val());
+        }).change();
+        // Change selected call type in URL
+        $("#callSelect").change(function() {
+            $('#callDisplay').html($(this).val());
+            var opt = $(this).val();
+            if (opt == "/fta?"){
+              $('.question4').show();
+            } else {
+              $('.question4').hide();
+            }
+        }).change();
+        // Change customer name in URL
+        $("#customerName").on("change keypress input", function() {
+            $("#customerNameDisplay").text( 'name=' + $(this).val().replace(/\s+/g, '+') );
+            if(!$(this).val()){
+              $("#customerNameDisplay").hide();
+            } else {
+              $("#customerNameDisplay").show();
+            }
+        });
+        // Change customer email in URL
+        $("#customerEmail").on("change keypress input", function() {
+            $("#customerEmailDisplay").text( '&email=' + $(this).val().replace(/\s+/g, '+') );
+            if(!$(this).val()){
+              $("#customerEmailDisplay").hide();
+            } else {
+              $("#customerEmailDisplay").show();
+            }
+        });
+        // Change customer number in URL
+        $("#customerNumber").on("change keypress input", function() {
+            $("#customerNumberDisplay").text( '&a1=' + $(this).val().replace(/\s+/g, '+') );
+            if(!$(this).val()){
+              $("#customerNumberDisplay").hide();
+            } else {
+              $("#customerNumberDisplay").show();
+            }
+        });
+        // Change customer account in URL
+        $("#customerAccountName").on("change keypress input", function() {
+            $("#customerAccountNameDisplay").text( '&a2=' + $(this).val().replace(/\s+/g, '+') );
+            if(!$(this).val()){
+              $("#customerAccountNameDisplay").hide();
+            } else {
+              $("#customerAccountNameDisplay").show();
+            }
+        });
+        // Change trial products in URL
+        $("#trialProducts").on("change keypress input", function() {
+            $("#trialProductsDisplay").text( '&a3=' + $(this).val().replace(/\s+/g, '+') );
+            if(!$(this).val()){
+              $("#trialProductsDisplay").hide();
+            } else {
+              $("#trialProductsDisplay").show();
+            }
+        });
+      });
+      // Store selected FTA Member in cookies
+      $(function () {
+      $('.userSelect').change(function() {
+          console.log('change');
+          if( Cookies ) {
+              Cookies.set('user', $(this).val());
+          }
+      });
+      var user_cookie = Cookies && Cookies.get('user') || '[NO NAME SELECTED]';
+      $('.userSelect').val(user_cookie).trigger('change');
+      });
+    </script>
+    <script>
+    // Copy URL to clipboard
+    function copyToClipboard(element) {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($(element).text()).select();
+      document.execCommand("copy");
+      $temp.remove();
+    }
+    </script>
+  </body>
 </html>
