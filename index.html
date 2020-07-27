@@ -51,8 +51,8 @@
         <input type="text" class="form-control" id="customerEmail">
       </div>
       <div class="form-group">
-        <label for="customerNumber">Customer Number</label>
-        <input type="text" class="form-control" id="customerNumber">
+        <label for="caseNumber">Case Number</label>
+        <input type="text" class="form-control" id="caseNumber">
       </div>
       <div class="form-group">
         <label for="customerAccountName">Account Name</label>
@@ -64,7 +64,7 @@
       </div>
 
       <div class="pb-1">Output</div>
-      <div id="newURL">https://calendly.com/<span id="ftaMemberDisplay"></span><span id="callDisplay"></span><span id="customerNameDisplay"></span><span id="customerEmailDisplay"></span><span id="customerNumberDisplay"></span><span id="customerAccountNameDisplay"></span><span id="trialProductsDisplay"></span></div>
+      <div id="newURL">https://calendly.com/<span id="ftaMemberDisplay"></span><span id="callDisplay"></span><span id="customerNameDisplay"></span><span id="customerEmailDisplay"></span><span id="caseNumberDisplay"></span><span id="customerAccountNameDisplay"></span><span id="trialProductsDisplay"></span></div>
       <br>
       <button class="btn btn-success" onclick="copyToClipboard('#newURL')">Copy URL</button>
     </div>
@@ -148,12 +148,12 @@
             }
         });
         // Change customer number in URL
-        $("#customerNumber").on("change keypress input", function() {
-            $("#customerNumberDisplay").text( '&a1=' + $(this).val().replace(/\s+/g, '+') );
+        $("#caseNumber").on("change keypress input", function() {
+            $("#caseNumberDisplay").text( '&a1=' + $(this).val().replace(/\s+/g, '+') );
             if(!$(this).val()){
-              $("#customerNumberDisplay").hide();
+              $("#caseNumberDisplay").hide();
             } else {
-              $("#customerNumberDisplay").show();
+              $("#caseNumberDisplay").show();
             }
         });
         // Change customer account in URL
